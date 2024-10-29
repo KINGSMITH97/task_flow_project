@@ -1,18 +1,29 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_flow_project/providers/task_provider.dart';
-import 'package:task_flow_project/providers/theme_provider.dart';
-import 'package:task_flow_project/screens/home.dart';
+import 'package:task_flow_project/ux/common/views/app_base.dart';
+import 'package:task_flow_project/ux/services/app_navigator.dart';
+import 'package:task_flow_project/ux/services/navigation_service.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => TaskProvider()),
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-      ],
-      child: const TaskFlowApp(),
-    ),
+  runZonedGuarded<Future<void>>(
+    () async {
+      // WidgetsBinding widgetsBinding =
+      WidgetsFlutterBinding.ensureInitialized();
+
+      runApp(
+        const AppBase(
+          app: TaskFlowApp(),
+        ),
+      );
+    },
+    (error, stack) {
+      log(
+        "Error occurred with details:\nError: $error\nStacktrace: $stack",
+      );
+    },
   );
 }
 
@@ -21,18 +32,15 @@ class TaskFlowApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        return MaterialApp(
-          title: "TaskFlow",
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            brightness:
-                themeProvider.isDarkMode ? Brightness.dark : Brightness.light,
-          ),
-          home: const HomePage(),
-        );
-      },
+    return MaterialApp(
+      title: "TaskFlow",
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+      navigatorKey: AppNavigator.navKey,
+      onGenerateRoute: NavigationService.onGenerateRoute,
+      initialRoute: NavigationService.entry,
     );
   }
 }
