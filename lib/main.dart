@@ -36,6 +36,7 @@ class TaskFlowApp extends StatelessWidget {
       title: "TaskFlow",
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: "Quicksand",
       ),
       debugShowCheckedModeBanner: false,
       navigatorKey: AppNavigator.navKey,
