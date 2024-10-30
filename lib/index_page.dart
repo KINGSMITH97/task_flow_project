@@ -26,7 +26,7 @@ class _IndexPageState extends State<IndexPage> {
     /// all necessary logics before app starts go here
     /// delayed future should be removed after implementing start logics
     Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 5),
       () {
         AppNavigator.goToOnboarding();
       },

@@ -5,7 +5,11 @@ class AppNavigator {
   static final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
   static void goToOnboarding() {
-    navigateTo(NavigationService.onboarding);
+    navigateTo(NavigationService.onboarding, popAllPrevious: true);
+  }
+
+  static void goToHome() {
+    navigateTo(NavigationService.home, popAllPrevious: true);
   }
 
   static void navigateTo(
