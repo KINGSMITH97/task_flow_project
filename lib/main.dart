@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:task_flow_project/ux/common/views/app_base.dart';
 import 'package:task_flow_project/ux/services/app_navigator.dart';
 import 'package:task_flow_project/ux/services/navigation_service.dart';

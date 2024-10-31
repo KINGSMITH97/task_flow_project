@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_flow_project/index_page.dart';
-import 'package:task_flow_project/ux/views/onboarding/home.dart';
+import 'package:task_flow_project/ux/views/onboarding/login_page.dart';
+import 'package:task_flow_project/ux/views/onboarding/signup_page.dart';
 import 'package:task_flow_project/ux/views/onboarding/onboarding_screen.dart';
 
 class NavigationService {
@@ -23,9 +24,14 @@ class NavigationService {
           builder: (context) => const OnboardingScreen(),
           settings: settings,
         );
-      case home:
+      case signUp:
         return MaterialPageRoute(
-          builder: (context) => const Home(),
+          builder: (context) => const CreateAccount(),
+          settings: settings,
+        );
+      case login:
+        return MaterialPageRoute(
+          builder: (context) => const Login(),
           settings: settings,
         );
 
