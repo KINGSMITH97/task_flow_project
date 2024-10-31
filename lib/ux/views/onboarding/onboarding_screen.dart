@@ -114,7 +114,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     onPressed: () {
                       if (currentIndex ==
                           Constants().onboardingContent.length - 1) {
-                        AppNavigator.goToHome();
+                        AppNavigator.goToSignUp();
                       }
                       _pageController.nextPage(
                         duration: const Duration(milliseconds: 100),
@@ -130,7 +130,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   BuildFilledButton(
                     title: "Skip",
                     onPressed: () {
-                      AppNavigator.goToHome();
+                      AppNavigator.goToSignUp();
                     },
                     width: 120,
                     isOutline: true,

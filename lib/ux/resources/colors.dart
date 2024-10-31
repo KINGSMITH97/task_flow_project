@@ -10,4 +10,5 @@ class ColorSource {
   static const Color info = Color(0xff2684fc);
   static const Color strokeColor = Color(0xffd2d6ef);
   static const Color indicatorColor = Color(0xffe7e7e8);
+  static const Color inputLabelColor = Color(0xffb4b4b5);
 }

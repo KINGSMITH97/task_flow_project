@@ -8,8 +8,12 @@ class AppNavigator {
     navigateTo(NavigationService.onboarding, popAllPrevious: true);
   }
 
-  static void goToHome() {
-    navigateTo(NavigationService.home, popAllPrevious: true);
+  static void goToSignUp() {
+    navigateTo(NavigationService.signUp, popAllPrevious: true);
+  }
+
+  static void goToLogin() {
+    navigateTo(NavigationService.login);
   }
 
   static void navigateTo(
