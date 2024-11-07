@@ -5,8 +5,10 @@ class BuildTextField extends StatelessWidget {
   const BuildTextField({
     super.key,
     required this.label,
+    this.prefixIcon,
   });
   final String label;
+  final IconData? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +17,16 @@ class BuildTextField extends StatelessWidget {
         floatingLabelBehavior: FloatingLabelBehavior.never,
         labelStyle: const TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w500,
           color: ColorSource.inputLabelColor,
         ),
+        prefixIcon: prefixIcon != null
+            ? Icon(
+                prefixIcon,
+                color: ColorSource.indicatorColor,
+                size: 20,
+              )
+            : null,
         labelText: label,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
