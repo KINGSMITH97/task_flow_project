@@ -16,6 +16,10 @@ class AppNavigator {
     navigateTo(NavigationService.login);
   }
 
+  static void goToHome() {
+    navigateTo(NavigationService.home);
+  }
+
   static void navigateTo(
     String path, {
     dynamic args,

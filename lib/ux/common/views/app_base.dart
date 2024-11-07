@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_flow_project/ux/view_models/bottom_nav_model.dart';
 import 'package:task_flow_project/ux/view_models/demo_view_model.dart';
 
 class AppBase extends StatelessWidget {
@@ -12,6 +13,9 @@ class AppBase extends StatelessWidget {
     return MultiProvider(
       /// providers are initialized here
       providers: [
+        ListenableProvider(
+          create: (_) => BottomNavModel(),
+        ),
         ListenableProvider(
           create: (_) => DemoViewModel(),
         ),

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task_flow_project/utils/build_filled_button.dart';
 import 'package:task_flow_project/ux/resources/colors.dart';
 import 'package:task_flow_project/ux/resources/constants.dart';
-import 'package:task_flow_project/ux/resources/images.dart';
-import 'package:task_flow_project/ux/resources/strings.dart';
+
 import 'package:task_flow_project/ux/services/app_navigator.dart';
 
 class OnboardingScreen extends StatefulWidget {
