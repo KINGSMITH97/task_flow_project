@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:task_flow_project/ux/resources/colors.dart';
 
-class BuildPendingTask extends StatelessWidget {
-  const BuildPendingTask(
+class BuildPendingTaskCard extends StatefulWidget {
+  const BuildPendingTaskCard(
       {super.key,
       required this.startTime,
       required this.endTime,
@@ -14,12 +14,18 @@ class BuildPendingTask extends StatelessWidget {
   final String deadline;
 
   @override
+  State<BuildPendingTaskCard> createState() => _BuildPendingTaskCardState();
+}
+
+class _BuildPendingTaskCardState extends State<BuildPendingTaskCard> {
+  @override
   Widget build(BuildContext context) {
     double cardHeight = 100;
     return Container(
       height: cardHeight,
       width: double.infinity,
       decoration: BoxDecoration(
+        color: ColorSource.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           width: 1,
@@ -35,7 +41,7 @@ class BuildPendingTask extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  startTime,
+                  widget.startTime,
                   style: const TextStyle(
                     color: ColorSource.cardGreyTextColor,
                   ),
@@ -46,7 +52,7 @@ class BuildPendingTask extends StatelessWidget {
                   color: ColorSource.cardGreyTextColor,
                 ),
                 Text(
-                  endTime,
+                  widget.endTime,
                   style: const TextStyle(
                     color: ColorSource.cardGreyTextColor,
                   ),
@@ -65,7 +71,7 @@ class BuildPendingTask extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  taskLabel,
+                  widget.taskLabel,
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                   ),
@@ -77,7 +83,7 @@ class BuildPendingTask extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  deadline,
+                  widget.deadline,
                   style: const TextStyle(
                     color: ColorSource.info,
                   ),

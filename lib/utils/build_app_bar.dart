@@ -6,6 +6,8 @@ PreferredSizeWidget buildAppBar({
   required String title,
 }) {
   return AppBar(
+    backgroundColor: ColorSource.white,
+    scrolledUnderElevation: 0,
     automaticallyImplyLeading: false,
     title: Text(
       title,

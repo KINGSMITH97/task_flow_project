@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:task_flow_project/utils/build_app_bar.dart';
+import 'package:task_flow_project/utils/build_completed_task_card.dart';
 import 'package:task_flow_project/utils/build_pending_task.dart';
 import 'package:task_flow_project/utils/build_text_field.dart';
 
 import 'package:task_flow_project/ux/resources/colors.dart';
+import 'package:task_flow_project/ux/resources/constants.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
@@ -18,6 +20,7 @@ class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorSource.white,
       appBar: buildAppBar(title: "Hello, Melanie"),
       body: SingleChildScrollView(
         child: Padding(
@@ -71,7 +74,9 @@ class _TasksPageState extends State<TasksPage> {
                 label: "Search your tasks",
               ),
               const SizedBox(height: 16),
-              selectedTabIndex == 0 ? BuildTaskContent() : BuildGoalsContent(),
+              selectedTabIndex == 0
+                  ? const BuildTaskContent()
+                  : const BuildGoalsContent(),
             ],
           ),
         ),
@@ -126,79 +131,114 @@ class BuildTaskContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              "Today's Pending Tasks",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                print("Add more");
-              },
-              child: const Text(
-                "Add More",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: ColorSource.info,
-                ),
-              ),
-            ),
-          ],
+        buildSectionHeader(
+          sectionHeading: "Today's Pending Tasks",
+          onTap: () {},
         ),
         const SizedBox(height: 16),
-        const BuildPendingTask(
+        const BuildPendingTaskCard(
           startTime: "Any Time",
           endTime: "Any Time",
           taskLabel: "Take out the trash",
           deadline: "Due in 4hrs 32mins",
         ),
         const SizedBox(height: 16),
-        const BuildPendingTask(
+        const BuildPendingTaskCard(
           startTime: "10:00 am",
           endTime: "10:15 am",
           taskLabel: "Wash the dishes",
           deadline: "Due in 4hrs 32mins",
         ),
         const SizedBox(height: 16),
-        const BuildPendingTask(
+        const BuildPendingTaskCard(
           startTime: "10:30 pm",
           endTime: "Any Time",
           taskLabel: "Go and sell my certificate",
           deadline: "Due in 4hrs 32mins",
         ),
         const SizedBox(height: 24),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              "Tasks Completed Today",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+        buildSectionHeader(
+          sectionHeading: "Tasks Completed Today",
+          onTap: () {},
+        ),
+        const SizedBox(height: 16),
+        ListView.builder(
+          itemCount: Constants()
+              .tasks
+              .where((task) => task.taskStatus.name == "completed")
+              .length,
+          itemBuilder: (context, index) {
+            final completedTask = Constants()
+                .tasks
+                .where((task) => task.taskStatus.name == "completed")
+                .toList();
+            return Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: BuildCompletedTaskCard(
+                task: completedTask[index],
               ),
-            ),
-            InkWell(
-              onTap: () {
-                print("Add more");
-              },
-              child: const Text(
-                "Add More",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: ColorSource.info,
-                ),
+            );
+          },
+        ),
+        const SizedBox(height: 24),
+        buildSectionHeader(
+          sectionHeading: "Tasks Cancelled Today",
+          onTap: () {},
+        ),
+        const SizedBox(height: 16),
+        // const BuildCompletedTaskCard(
+        //   taskStatus: TaskStatus.canceled,
+        //   cardLabel: "Go see a friend",
+        // ),
+        ListView.builder(
+          itemCount: Constants()
+              .tasks
+              .where((task) => task.taskStatus.name == "canceled")
+              .length,
+          itemBuilder: (context, index) {
+            final completedTask = Constants()
+                .tasks
+                .where((task) => task.taskStatus.name == "canceled")
+                .toList();
+            return Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: BuildCompletedTaskCard(
+                task: completedTask[index],
               ),
-            ),
-          ],
+            );
+          },
         ),
       ],
     );
   }
+}
+
+Widget buildSectionHeader({
+  required String sectionHeading,
+  required Function() onTap,
+}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        sectionHeading,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      InkWell(
+        onTap: onTap,
+        child: const Text(
+          "Add More",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: ColorSource.info,
+          ),
+        ),
+      ),
+    ],
+  );
 }
 
 class BuildGoalsContent extends StatelessWidget {
@@ -206,6 +246,6 @@ class BuildGoalsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Goals');
+    return const Text('Goals');
   }
 }
