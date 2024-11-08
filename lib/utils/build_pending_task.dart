@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:task_flow_project/ux/resources/colors.dart';
+import 'package:task_flow_project/ux/view_models/task_model.dart';
 
 class BuildPendingTaskCard extends StatefulWidget {
-  const BuildPendingTaskCard(
-      {super.key,
-      required this.startTime,
-      required this.endTime,
-      required this.taskLabel,
-      required this.deadline});
-  final String startTime;
-  final String endTime;
-  final String taskLabel;
-  final String deadline;
+  const BuildPendingTaskCard({
+    super.key,
+    required this.task,
+  });
+  final Task task;
 
   @override
   State<BuildPendingTaskCard> createState() => _BuildPendingTaskCardState();
@@ -41,7 +37,7 @@ class _BuildPendingTaskCardState extends State<BuildPendingTaskCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.startTime,
+                  widget.task.startTime,
                   style: const TextStyle(
                     color: ColorSource.cardGreyTextColor,
                   ),
@@ -52,7 +48,7 @@ class _BuildPendingTaskCardState extends State<BuildPendingTaskCard> {
                   color: ColorSource.cardGreyTextColor,
                 ),
                 Text(
-                  widget.endTime,
+                  widget.task.endTime,
                   style: const TextStyle(
                     color: ColorSource.cardGreyTextColor,
                   ),
@@ -71,7 +67,7 @@ class _BuildPendingTaskCardState extends State<BuildPendingTaskCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.taskLabel,
+                  widget.task.taskLabel,
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                   ),
@@ -82,9 +78,9 @@ class _BuildPendingTaskCardState extends State<BuildPendingTaskCard> {
                     color: ColorSource.cardGreyTextColor,
                   ),
                 ),
-                Text(
-                  widget.deadline,
-                  style: const TextStyle(
+                const Text(
+                  "Due in 4hrs 32mins",
+                  style: TextStyle(
                     color: ColorSource.info,
                   ),
                 ),

@@ -23,6 +23,7 @@ class _TasksPageState extends State<TasksPage> {
       backgroundColor: ColorSource.white,
       appBar: buildAppBar(title: "Hello, Melanie"),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
@@ -73,7 +74,7 @@ class _TasksPageState extends State<TasksPage> {
                 prefixIcon: HugeIcons.strokeRoundedSearch01,
                 label: "Search your tasks",
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
               selectedTabIndex == 0
                   ? const BuildTaskContent()
                   : const BuildGoalsContent(),
@@ -136,74 +137,77 @@ class BuildTaskContent extends StatelessWidget {
           onTap: () {},
         ),
         const SizedBox(height: 16),
-        const BuildPendingTaskCard(
-          startTime: "Any Time",
-          endTime: "Any Time",
-          taskLabel: "Take out the trash",
-          deadline: "Due in 4hrs 32mins",
+        //
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: Constants()
+              .tasks
+              .where((task) => task.taskStatus.name == "pending")
+              .length,
+          itemBuilder: (context, index) {
+            final pendingTasks = Constants()
+                .tasks
+                .where((task) => task.taskStatus.name == "pending")
+                .toList();
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: BuildPendingTaskCard(
+                task: pendingTasks[index],
+              ),
+            );
+          },
         ),
+
         const SizedBox(height: 16),
-        const BuildPendingTaskCard(
-          startTime: "10:00 am",
-          endTime: "10:15 am",
-          taskLabel: "Wash the dishes",
-          deadline: "Due in 4hrs 32mins",
-        ),
-        const SizedBox(height: 16),
-        const BuildPendingTaskCard(
-          startTime: "10:30 pm",
-          endTime: "Any Time",
-          taskLabel: "Go and sell my certificate",
-          deadline: "Due in 4hrs 32mins",
-        ),
-        const SizedBox(height: 24),
         buildSectionHeader(
           sectionHeading: "Tasks Completed Today",
           onTap: () {},
         ),
         const SizedBox(height: 16),
         ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: Constants()
               .tasks
               .where((task) => task.taskStatus.name == "completed")
               .length,
           itemBuilder: (context, index) {
-            final completedTask = Constants()
+            final completedTasks = Constants()
                 .tasks
                 .where((task) => task.taskStatus.name == "completed")
                 .toList();
             return Padding(
-              padding: const EdgeInsets.only(top: 16.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: BuildCompletedTaskCard(
-                task: completedTask[index],
+                task: completedTasks[index],
               ),
             );
           },
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 8),
         buildSectionHeader(
           sectionHeading: "Tasks Cancelled Today",
           onTap: () {},
         ),
         const SizedBox(height: 16),
-        // const BuildCompletedTaskCard(
-        //   taskStatus: TaskStatus.canceled,
-        //   cardLabel: "Go see a friend",
-        // ),
+
         ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: Constants()
               .tasks
               .where((task) => task.taskStatus.name == "canceled")
               .length,
           itemBuilder: (context, index) {
-            final completedTask = Constants()
+            final canceledTasks = Constants()
                 .tasks
                 .where((task) => task.taskStatus.name == "canceled")
                 .toList();
             return Padding(
-              padding: const EdgeInsets.only(top: 16.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: BuildCompletedTaskCard(
-                task: completedTask[index],
+                task: canceledTasks[index],
               ),
             );
           },

@@ -50,7 +50,7 @@ class _BuildCompletedTaskCardState extends State<BuildCompletedTaskCard> {
                 ),
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

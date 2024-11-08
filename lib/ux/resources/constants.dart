@@ -32,7 +32,19 @@ class Constants {
       taskStatus: TaskStatus.completed,
     ),
     Task(
+      taskLabel: "Write flutter codes",
+      startTime: "12:00am",
+      endTime: "8:25am",
+      taskStatus: TaskStatus.completed,
+    ),
+    Task(
       taskLabel: "Go see a friend",
+      startTime: "10:00am",
+      endTime: "11:20am",
+      taskStatus: TaskStatus.canceled,
+    ),
+    Task(
+      taskLabel: "Travel with granny",
       startTime: "10:00am",
       endTime: "11:20am",
       taskStatus: TaskStatus.canceled,
