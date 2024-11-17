@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_flow_project/index_page.dart';
+import 'package:task_flow_project/ux/views/Task/create_task.dart';
 import 'package:task_flow_project/ux/views/home/homepage.dart';
 import 'package:task_flow_project/ux/views/onboarding/login_page.dart';
 import 'package:task_flow_project/ux/views/onboarding/signup_page.dart';
@@ -11,6 +12,7 @@ class NavigationService {
   static const String login = "/login";
   static const String signUp = "/signUp";
   static const String home = "/home";
+  static const String createTask = "/createTask";
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -38,6 +40,11 @@ class NavigationService {
       case home:
         return MaterialPageRoute(
           builder: (context) => const Homepage(),
+          settings: settings,
+        );
+      case createTask:
+        return MaterialPageRoute(
+          builder: (context) => const CreateTask(),
           settings: settings,
         );
 

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:task_flow_project/utils/build_app_bar.dart';
 import 'package:task_flow_project/utils/build_completed_task_card.dart';
+import 'package:task_flow_project/utils/build_empty_state.dart';
 import 'package:task_flow_project/utils/build_pending_task.dart';
 import 'package:task_flow_project/utils/build_text_field.dart';
 
 import 'package:task_flow_project/ux/resources/colors.dart';
 import 'package:task_flow_project/ux/resources/constants.dart';
+import 'package:task_flow_project/ux/services/app_navigator.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
@@ -82,13 +84,59 @@ class _TasksPageState extends State<TasksPage> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return SimpleDialog(
+                backgroundColor: ColorSource.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                title: const Text(
+                  'Create a new',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                children: [
+                  SimpleDialogOption(
+                    onPressed: () {
+                      AppNavigator.goToCreateTask();
+                    },
+                    child: buildSectionTab(
+                      title: "Tasks",
+                      icon: HugeIcons.strokeRoundedTask01,
+                    ),
+                  ),
+                  SimpleDialogOption(
+                    onPressed: () {},
+                    child: buildSectionTab(
+                      title: "Goals",
+                      icon: HugeIcons.strokeRoundedChampion,
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        backgroundColor: ColorSource.black,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: const Icon(
+          HugeIcons.strokeRoundedAdd01,
+          color: ColorSource.white,
+        ),
+      ),
     );
   }
 
   Widget buildSectionTab({
     required String title,
     required IconData icon,
-    required int currentIndex,
+    int? currentIndex,
   }) {
     return Container(
       height: 50,
@@ -130,6 +178,24 @@ class BuildTaskContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //
+    final pendingTasks = Constants()
+        .tasks
+        .where((task) => task.taskStatus.name == "pending")
+        .toList();
+
+    //
+    final completedTasks = Constants()
+        .tasks
+        .where((task) => task.taskStatus.name == "completed")
+        .toList();
+
+    //
+    final canceledTasks = Constants()
+        .tasks
+        .where((task) => task.taskStatus.name == "canceled")
+        .toList();
+
     return Column(
       children: [
         buildSectionHeader(
@@ -138,26 +204,28 @@ class BuildTaskContent extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         //
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: Constants()
-              .tasks
-              .where((task) => task.taskStatus.name == "pending")
-              .length,
-          itemBuilder: (context, index) {
-            final pendingTasks = Constants()
-                .tasks
-                .where((task) => task.taskStatus.name == "pending")
-                .toList();
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: BuildPendingTaskCard(
-                task: pendingTasks[index],
+        pendingTasks.isNotEmpty
+            ? ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: Constants()
+                    .tasks
+                    .where((task) => task.taskStatus.name == "pending")
+                    .length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: BuildPendingTaskCard(
+                      task: pendingTasks[index],
+                    ),
+                  );
+                },
+              )
+            : BuildEmptyState(
+                caption: "Oops! You have no pending tasks for today",
+                buttonLabel: "Schedule Task",
+                onTap: () {},
               ),
-            );
-          },
-        ),
 
         const SizedBox(height: 16),
         buildSectionHeader(
@@ -165,26 +233,28 @@ class BuildTaskContent extends StatelessWidget {
           onTap: () {},
         ),
         const SizedBox(height: 16),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: Constants()
-              .tasks
-              .where((task) => task.taskStatus.name == "completed")
-              .length,
-          itemBuilder: (context, index) {
-            final completedTasks = Constants()
-                .tasks
-                .where((task) => task.taskStatus.name == "completed")
-                .toList();
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: BuildCompletedTaskCard(
-                task: completedTasks[index],
+        completedTasks.isNotEmpty
+            ? ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: Constants()
+                    .tasks
+                    .where((task) => task.taskStatus.name == "completed")
+                    .length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: BuildCompletedTaskCard(
+                      task: completedTasks[index],
+                    ),
+                  );
+                },
+              )
+            : BuildEmptyState(
+                caption: "Oops! You have no completed tasks",
+                buttonLabel: "Schedule Task",
+                onTap: () {},
               ),
-            );
-          },
-        ),
         const SizedBox(height: 8),
         buildSectionHeader(
           sectionHeading: "Tasks Cancelled Today",
@@ -192,26 +262,28 @@ class BuildTaskContent extends StatelessWidget {
         ),
         const SizedBox(height: 16),
 
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: Constants()
-              .tasks
-              .where((task) => task.taskStatus.name == "canceled")
-              .length,
-          itemBuilder: (context, index) {
-            final canceledTasks = Constants()
-                .tasks
-                .where((task) => task.taskStatus.name == "canceled")
-                .toList();
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: BuildCompletedTaskCard(
-                task: canceledTasks[index],
+        canceledTasks.isNotEmpty
+            ? ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: Constants()
+                    .tasks
+                    .where((task) => task.taskStatus.name == "canceled")
+                    .length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: BuildCompletedTaskCard(
+                      task: canceledTasks[index],
+                    ),
+                  );
+                },
+              )
+            : BuildEmptyState(
+                caption: "Oops! You have no canceled task for today",
+                buttonLabel: "Schedule Task",
+                onTap: () {},
               ),
-            );
-          },
-        ),
       ],
     );
   }
@@ -234,7 +306,7 @@ Widget buildSectionHeader({
       InkWell(
         onTap: onTap,
         child: const Text(
-          "Add More",
+          "See More",
           style: TextStyle(
             fontWeight: FontWeight.w600,
             color: ColorSource.info,

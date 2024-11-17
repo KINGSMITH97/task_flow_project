@@ -20,6 +20,10 @@ class AppNavigator {
     navigateTo(NavigationService.home);
   }
 
+  static void goToCreateTask() {
+    navigateTo(NavigationService.createTask);
+  }
+
   static void navigateTo(
     String path, {
     dynamic args,
