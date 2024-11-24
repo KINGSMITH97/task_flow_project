@@ -1,8 +1,11 @@
+import 'package:intl/intl.dart';
 import 'package:task_flow_project/utils/build_completed_task_card.dart';
 import 'package:task_flow_project/ux/resources/images.dart';
 import 'package:task_flow_project/ux/view_models/task_model.dart';
 
 class Constants {
+  final now = DateTime.now();
+
   List<Map<String, dynamic>> onboardingContent = [
     {
       "title": "Track Daily Activities",
@@ -24,47 +27,54 @@ class Constants {
     },
   ];
 
-  List<Task> tasks = [
+  static final List<Task> tasks = [
     Task(
+      id: 5,
       taskLabel: "Workout",
-      startTime: "8:00am",
-      endTime: "8:25am",
+      startTime: DateFormat('HH:mm').format(DateTime.now()),
+      endTime: DateFormat('HH:mm').format(DateTime.now()),
       taskStatus: TaskStatus.completed,
     ),
     Task(
+      id: 4,
       taskLabel: "Write flutter codes",
-      startTime: "12:00am",
-      endTime: "8:25am",
+      startTime: DateFormat('HH:mm').format(DateTime.now()),
+      endTime: DateFormat('HH:mm').format(DateTime.now()),
       taskStatus: TaskStatus.completed,
     ),
     Task(
+      id: 3,
       taskLabel: "Go see a friend",
-      startTime: "10:00am",
-      endTime: "11:20am",
+      startTime: DateFormat('HH:mm').format(DateTime.now()),
+      endTime: DateFormat('HH:mm').format(DateTime.now()),
       taskStatus: TaskStatus.canceled,
     ),
     Task(
+      id: 2,
       taskLabel: "Travel with granny",
-      startTime: "10:00am",
-      endTime: "11:20am",
+      startTime: DateFormat('HH:mm').format(DateTime.now()),
+      endTime: DateFormat('HH:mm').format(DateTime.now()),
       taskStatus: TaskStatus.canceled,
     ),
     Task(
+      id: 1,
       taskLabel: "Take out the trash",
-      startTime: "Any Time",
-      endTime: "Any Time",
+      startTime: DateFormat('HH:mm').format(DateTime.now()),
+      endTime: DateFormat('HH:mm').format(DateTime.now()),
       taskStatus: TaskStatus.pending,
     ),
     Task(
+      id: 6,
       taskLabel: "Wash the dishes",
-      startTime: "10:00am",
-      endTime: "10:25am",
+      startTime: DateFormat('HH:mm').format(DateTime.now()),
+      endTime: DateFormat('HH:mm').format(DateTime.now()),
       taskStatus: TaskStatus.pending,
     ),
     Task(
+      id: 7,
       taskLabel: "Sweep and clean the house",
-      startTime: "8:00am",
-      endTime: "8:25am",
+      startTime: DateFormat('HH:mm').format(DateTime.now()),
+      endTime: DateFormat('HH:mm').format(DateTime.now()),
       taskStatus: TaskStatus.pending,
     )
   ];

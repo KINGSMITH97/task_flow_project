@@ -5,14 +5,17 @@ class BuildTextArea extends StatelessWidget {
   const BuildTextArea({
     super.key,
     required this.label,
+    this.controller,
     this.prefixIcon,
   });
   final String label;
   final IconData? prefixIcon;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       maxLines: null,
       keyboardType: TextInputType.multiline,
       decoration: InputDecoration(

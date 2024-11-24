@@ -9,6 +9,7 @@ import 'package:task_flow_project/utils/build_text_field.dart';
 import 'package:task_flow_project/ux/resources/colors.dart';
 import 'package:task_flow_project/ux/resources/constants.dart';
 import 'package:task_flow_project/ux/services/app_navigator.dart';
+import 'package:task_flow_project/ux/view_models/task_model.dart';
 
 class TasksPage extends StatefulWidget {
   const TasksPage({super.key});
@@ -173,26 +174,28 @@ class _TasksPageState extends State<TasksPage> {
   }
 }
 
-class BuildTaskContent extends StatelessWidget {
+class BuildTaskContent extends StatefulWidget {
   const BuildTaskContent({super.key});
 
   @override
+  State<BuildTaskContent> createState() => _BuildTaskContentState();
+}
+
+class _BuildTaskContentState extends State<BuildTaskContent> {
+  @override
   Widget build(BuildContext context) {
     //
-    final pendingTasks = Constants()
-        .tasks
+    final pendingTasks = Constants.tasks
         .where((task) => task.taskStatus.name == "pending")
         .toList();
 
     //
-    final completedTasks = Constants()
-        .tasks
+    final completedTasks = Constants.tasks
         .where((task) => task.taskStatus.name == "completed")
         .toList();
 
     //
-    final canceledTasks = Constants()
-        .tasks
+    final canceledTasks = Constants.tasks
         .where((task) => task.taskStatus.name == "canceled")
         .toList();
 
@@ -208,14 +211,20 @@ class BuildTaskContent extends StatelessWidget {
             ? ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: Constants()
-                    .tasks
+                itemCount: Constants.tasks
                     .where((task) => task.taskStatus.name == "pending")
                     .length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
                     child: BuildPendingTaskCard(
+                      onDelete: (context) {
+                        setState(() {
+                          Constants.tasks.removeWhere((Task task) {
+                            return task.id == pendingTasks[index].id;
+                          });
+                        });
+                      },
                       task: pendingTasks[index],
                     ),
                   );
@@ -237,8 +246,7 @@ class BuildTaskContent extends StatelessWidget {
             ? ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: Constants()
-                    .tasks
+                itemCount: Constants.tasks
                     .where((task) => task.taskStatus.name == "completed")
                     .length,
                 itemBuilder: (context, index) {
@@ -266,8 +274,7 @@ class BuildTaskContent extends StatelessWidget {
             ? ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: Constants()
-                    .tasks
+                itemCount: Constants.tasks
                     .where((task) => task.taskStatus.name == "canceled")
                     .length,
                 itemBuilder: (context, index) {

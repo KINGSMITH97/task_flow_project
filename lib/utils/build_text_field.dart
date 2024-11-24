@@ -6,13 +6,16 @@ class BuildTextField extends StatelessWidget {
     super.key,
     required this.label,
     this.prefixIcon,
+    this.controller,
   });
   final String label;
   final IconData? prefixIcon;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.never,
         labelStyle: const TextStyle(

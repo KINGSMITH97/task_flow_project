@@ -6,8 +6,10 @@ class Task {
   final String startTime;
   final String endTime;
   final TaskStatus taskStatus;
+  final int id;
 
   Task({
+    required this.id,
     required this.taskLabel,
     this.description,
     required this.startTime,
@@ -17,6 +19,7 @@ class Task {
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
+      id: json['id'] as int,
       taskLabel: json['taskLabel'] as String,
       description: json['description'] as String?,
       startTime: json['startTime'] as String,
@@ -29,6 +32,7 @@ class Task {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'taskLabel': taskLabel,
       'description': description,
       'startTime': startTime,
